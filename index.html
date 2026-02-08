@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotcakes del Alma | Cocina con Intención</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Dancing+Script:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FDFBF7;
+            color: #463f3a;
+            font-family: 'Lato', sans-serif;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+        .handwritten { font-family: 'Dancing Script', cursive; }
+        
+        .card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid rgba(163, 177, 138, 0.1);
+            margin-bottom: 4rem;
+            overflow: hidden;
+        }
+
+        .photo-container {
+            position: relative;
+            padding: 12px;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-container img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+            background-color: #f9f9f9;
+        }
+
+        .rotate-left { transform: rotate(-2deg); }
+        .rotate-right { transform: rotate(2deg); }
+
+        .photo-container:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .nutrition-panel {
+            display: none;
+            background: #F9FBF7;
+            border-top: 1px solid #f0f0f0;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .nutrition-panel.show { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            text-decoration: none !important;
+        }
+        .nav-link:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.9);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="text-center mb-16 pt-8">
+        <p class="handwritten text-4xl text-[#D4A373] mb-2">Cocina con intención</p>
+        <h1 class="text-6xl md:text-7xl font-bold text-[#588157] mb-8 tracking-tight">Hotcakes del Alma</h1>
+        
+        <nav class="flex flex-wrap justify-center gap-3">
+            <a href="#natural" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#588157] font-medium border border-[#A3B18A]">🌿 Natural</a>
+            <a href="#platano" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#D4A373] font-medium border border-[#D4A373]">🍌 Plátano</a>
+            <a href="#zanahoria" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#E99D44] font-medium border border-[#E99D44]">🥕 Zanahoria</a>
+            <a href="#manzana" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#BC4749] font-medium border border-[#BC4749]">🍎 Manzana</a>
+            <a href="#extras" class="nav-link bg-[#588157] px-5 py-2 rounded-full shadow-sm text-white font-medium">✨ Extras</a>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+        
+        <!-- Receta Natural -->
+        <section id="natural" class="card">
+            <div class="bg-[#A3B18A] p-8 text-white text-center">
+                <h2 class="text-4xl md:text-5xl italic">Esencia Natural</h2>
+                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Vainilla & Avena</p>
+            </div>
+            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
+                <div class="md:col-span-4">
+                    <div class="photo-container rotate-left">
+                        <img src="https://images.unsplash.com/photo-1598214886806-c87b24a9750d?auto=format&fit=crop&q=80&w=800" alt="Hotcakes Naturales">
+                    </div>
+                </div>
+                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h3 class="text-2xl text-[#588157] mb-4 border-b border-[#A3B18A]/30 pb-2 italic text-left">Ingredientes</h3>
+                        <ul class="space-y-3 text-stone-700">
+                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> ¾ taza harina de avena</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> 2 huevos</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> 2 cdas yogurt natural</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> Vainilla y pizca de sal</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl text-[#588157] mb-4 border-b border-[#A3B18A]/30 pb-2 italic text-left">El Ritual</h3>
+                        <p class="text-stone-600 italic leading-relaxed">
+                            "Mezcla con suavidad. Deja que la masa repose 5 min para que la avena se hidrate y queden extra esponjosos."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 pb-8 text-center">
+                <button onclick="toggleTab('nutri-natural')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#588157]">Información Nutricional</button>
+                <div id="nutri-natural" class="nutrition-panel p-6 mt-4 rounded-2xl">
+                    <p class="font-bold text-[#588157] text-lg">~112 kcal | 5.7g Proteína | 12g Carbos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Receta Plátano -->
+        <section id="platano" class="card">
+            <div class="bg-[#D4A373] p-8 text-white text-center">
+                <h2 class="text-4xl md:text-5xl italic">Plátano Dulce</h2>
+                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Energía & Potasio</p>
+            </div>
+            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
+                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 order-2 md:order-1 text-left">
+                    <div>
+                        <h3 class="text-2xl text-[#D4A373] mb-4 border-b border-[#D4A373]/30 pb-2 italic text-left">Ingredientes</h3>
+                        <ul class="space-y-3 text-stone-700">
+                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> 1 plátano maduro</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> ¾ taza harina de avena</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> 2 huevos</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> Canela al gusto</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl text-[#D4A373] mb-4 border-b border-[#D4A373]/30 pb-2 italic text-left">El Ritual</h3>
+                        <p class="text-stone-600 italic leading-relaxed">
+                            "Machaca el plátano hasta que sea un puré sedoso. Mézclalo con amor antes de añadir los ingredientes secos."
+                        </p>
+                    </div>
+                </div>
+                <div class="md:col-span-4 order-1 md:order-2">
+                    <div class="photo-container rotate-right">
+                        <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee9a?auto=format&fit=crop&q=80&w=800" alt="Hotcakes de Plátano">
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 pb-8 text-center">
+                <button onclick="toggleTab('nutri-platano')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#D4A373]">Información Nutricional</button>
+                <div id="nutri-platano" class="nutrition-panel p-6 mt-4 rounded-2xl">
+                    <p class="font-bold text-[#D4A373] text-lg">~130 kcal | 2.1g Fibra | Energía Natural</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Receta Zanahoria -->
+        <section id="zanahoria" class="card">
+            <div class="bg-[#E99D44] p-8 text-white text-center">
+                <h2 class="text-4xl md:text-5xl italic">Carrot Cake Style</h2>
+                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Especias & Vitalidad</p>
+            </div>
+            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
+                <div class="md:col-span-4">
+                    <div class="photo-container rotate-left">
+                        <img src="https://images.unsplash.com/photo-1626700051175-65686c481116?auto=format&fit=crop&q=80&w=800" alt="Hotcakes de Zanahoria">
+                    </div>
+                </div>
+                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h3 class="text-2xl text-[#E99D44] mb-4 border-b border-[#E99D44]/30 pb-2 italic text-left">Ingredientes</h3>
+                        <ul class="space-y-3 text-stone-700">
+                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> ½ taza zanahoria rallada</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> ¾ taza harina de avena</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> 2 huevos</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> Nuez moscada y jengibre</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl text-[#E99D44] mb-4 border-b border-[#E99D44]/30 pb-2 italic text-left">El Ritual</h3>
+                        <p class="text-stone-600 italic leading-relaxed">
+                            "Ralla la zanahoria muy fina. Es el secreto para que se funda con la masa y aporte un color vibrante."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 pb-8 text-center">
+                <button onclick="toggleTab('nutri-zanahoria')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#E99D44]">Información Nutricional</button>
+                <div id="nutri-zanahoria" class="nutrition-panel p-6 mt-4 rounded-2xl">
+                    <p class="font-bold text-[#E99D44] text-lg">~125 kcal | Vitamina A | Antioxidante</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Receta Manzana -->
+        <section id="manzana" class="card">
+            <div class="bg-[#BC4749] p-8 text-white text-center">
+                <h2 class="text-4xl md:text-5xl italic">Manzana & Canela</h2>
+                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Otoño & Confort</p>
+            </div>
+            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
+                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 order-2 md:order-1 text-left">
+                    <div>
+                        <h3 class="text-2xl text-[#BC4749] mb-4 border-b border-[#BC4749]/30 pb-2 italic text-left">Ingredientes</h3>
+                        <ul class="space-y-3 text-stone-700">
+                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> ½ manzana rallada</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> ¾ taza harina de avena</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> 2 huevos</li>
+                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> Canela extra</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl text-[#BC4749] mb-4 border-b border-[#BC4749]/30 pb-2 italic text-left">El Ritual</h3>
+                        <p class="text-stone-600 italic leading-relaxed">
+                            "La manzana aporta una humedad única. Sírvelos calientes para que el aroma a canela llene tu cocina."
+                        </p>
+                    </div>
+                </div>
+                <div class="md:col-span-4 order-1 md:order-2">
+                    <div class="photo-container rotate-right">
+                        <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&q=80&w=800" alt="Hotcakes de Manzana">
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 pb-8 text-center">
+                <button onclick="toggleTab('nutri-manzana')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#BC4749]">Información Nutricional</button>
+                <div id="nutri-manzana" class="nutrition-panel p-6 mt-4 rounded-2xl">
+                    <p class="font-bold text-[#BC4749] text-lg">~118 kcal | Digestivo | Bajo Glucémico</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Extras -->
+        <section id="extras" class="card bg-[#F2F4EF] border-dashed border-2 border-[#A3B18A]">
+            <div class="p-10 text-center">
+                <h2 class="text-4xl font-serif text-[#588157] mb-6 tracking-tight">✨ Toppings & Acompañamientos</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                        <p class="font-bold text-[#D4A373] mb-2 uppercase text-xs tracking-widest">Crujientes</p>
+                        <p class="text-sm text-stone-500 italic leading-relaxed">Nueces de castilla, semillas de cáñamo (hemp) o cacao nibs para un toque amargo.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                        <p class="font-bold text-[#588157] mb-2 uppercase text-xs tracking-widest">Fruta Fresca</p>
+                        <p class="text-sm text-stone-500 italic leading-relaxed">Berries silvestres, higos maduros o rodajas de plátano fresco.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                        <p class="font-bold text-[#BC4749] mb-2 uppercase text-xs tracking-widest">Salsas & Untables</p>
+                        <p class="text-sm text-stone-500 italic leading-relaxed">Miel de maple pura, crema de almendras o yogurt griego extra.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-20">
+        <div class="max-w-xs mx-auto border-t border-stone-200 pt-8">
+            <p class="handwritten text-4xl text-[#588157] mb-3">Hecho con amor</p>
+            <p class="text-[10px] uppercase tracking-[0.3em] text-stone-400">@soymarthacon.h | @storiah.mx</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTab(id) {
+            const panel = document.getElementById(id);
+            if (panel) {
+                const isVisible = panel.classList.contains('show');
+                // Ocultar otros paneles abiertos (opcional, para limpieza)
+                document.querySelectorAll('.nutrition-panel').forEach(p => p.classList.remove('show'));
+                if (!isVisible) {
+                    panel.classList.add('show');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
