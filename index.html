@@ -3,291 +3,570 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotcakes del Alma | Cocina con Intención</title>
+    <title>Hotcakes del Alma - Recetario Completo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Dancing+Script:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FDFBF7;
-            color: #463f3a;
-            font-family: 'Lato', sans-serif;
+        :root {
+            --color-sage-light: #a8b894;
+            --color-sage-dark: #6b7c55;
+            --color-earth: #4a3728;
+            --color-sand: #fdfcf8;
+            --color-terracotta: #c97c5d;
+        }
+
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #f9f9f5;
+            color: var(--color-earth);
             scroll-behavior: smooth;
         }
-        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
-        .handwritten { font-family: 'Dancing Script', cursive; }
-        
-        .card {
+
+        .serif-title { font-family: 'Fraunces', serif; }
+        .italic-title { font-family: 'Fraunces', serif; font-style: italic; }
+
+        .recipe-card {
             background: white;
-            border-radius: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            border: 1px solid rgba(163, 177, 138, 0.1);
-            margin-bottom: 4rem;
+            border-radius: 24px;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
         }
 
-        .photo-container {
-            position: relative;
-            padding: 12px;
+        .recipe-header {
+            background-color: var(--color-sage-light);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        .nav-pill {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: var(--color-earth);
         }
 
-        .photo-container img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            object-fit: cover;
-            display: block;
-            border-radius: 2px;
-            background-color: #f9f9f9;
+        .nav-pill:hover {
+            border-color: var(--color-terracotta);
+            color: var(--color-terracotta);
         }
 
-        .rotate-left { transform: rotate(-2deg); }
-        .rotate-right { transform: rotate(2deg); }
-
-        .photo-container:hover {
-            transform: rotate(0deg) scale(1.05);
-            z-index: 10;
+        /* Checkbox de ingredientes con tachado */
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        .nutrition-panel {
-            display: none;
-            background: #F9FBF7;
-            border-top: 1px solid #f0f0f0;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        .nutrition-panel.show { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .checkbox-item input {
+            margin-top: 5px;
+            accent-color: var(--color-sage-dark);
+            width: 16px;
+            height: 16px;
         }
 
-        .nav-link {
+        .checkbox-item input:checked + span {
+            text-decoration: line-through;
+            color: #a8a29e; /* Stone-400 */
+        }
+
+        /* Detalles Nutricionales */
+        details summary {
+            list-style: none;
+            cursor: pointer;
+            outline: none;
+        }
+        details summary::-webkit-details-marker { display: none; }
+
+        .nutrition-btn {
+            background: #f3f4f1;
+            padding: 0.8rem 1.5rem;
+            border-radius: 99px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--color-sage-dark);
+            border: 1px solid transparent;
             transition: all 0.3s ease;
-            text-decoration: none !important;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-block;
         }
-        .nav-link:hover {
-            transform: translateY(-2px);
-            filter: brightness(0.9);
+
+        .nutrition-btn:hover {
+            background: #e9ebe6;
+            border-color: var(--color-sage-light);
         }
+
+        .nutrition-dropdown {
+            background: #fafaf8;
+            border: 1px dashed #d1d5db;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .nutrition-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .nutrition-table th {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 2px solid #e5e7eb;
+            color: var(--color-earth);
+            font-weight: 700;
+        }
+
+        .nutrition-table td {
+            padding: 8px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .col-highlight { background-color: #f0fdf4; } /* Verde muy suave */
+
+        /* Fotos */
+        .photo-frame {
+            padding: 10px;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: rotate(-1deg);
+            transition: transform 0.3s;
+        }
+        .photo-frame:hover { transform: rotate(0deg) scale(1.02); }
+        .photo-frame img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+
+        .btn-subscribe {
+            background-color: var(--color-terracotta);
+            color: white;
+            transition: all 0.3s;
+        }
+        .btn-subscribe:hover { background-color: #a66249; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="pb-0">
 
     <!-- Header -->
-    <header class="text-center mb-16 pt-8">
-        <p class="handwritten text-4xl text-[#D4A373] mb-2">Cocina con intención</p>
-        <h1 class="text-6xl md:text-7xl font-bold text-[#588157] mb-8 tracking-tight">Hotcakes del Alma</h1>
+    <header class="text-center py-16 px-6 bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]">
+        <p class="italic-title text-[#c97c5d] text-2xl mb-2">Cocina con intención</p>
+        <h1 class="serif-title text-5xl md:text-7xl text-[#4a5d44] mb-10">Hotcakes del Alma</h1>
         
-        <nav class="flex flex-wrap justify-center gap-3">
-            <a href="#natural" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#588157] font-medium border border-[#A3B18A]">🌿 Natural</a>
-            <a href="#platano" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#D4A373] font-medium border border-[#D4A373]">🍌 Plátano</a>
-            <a href="#zanahoria" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#E99D44] font-medium border border-[#E99D44]">🥕 Zanahoria</a>
-            <a href="#manzana" class="nav-link bg-white px-5 py-2 rounded-full shadow-sm text-[#BC4749] font-medium border border-[#BC4749]">🍎 Manzana</a>
-            <a href="#extras" class="nav-link bg-[#588157] px-5 py-2 rounded-full shadow-sm text-white font-medium">✨ Extras</a>
+        <nav class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            <a href="#natural" class="nav-pill">🌿 Vainilla</a>
+            <a href="#platano" class="nav-pill">🍌 Plátano</a>
+            <a href="#manzana" class="nav-pill">🍎 Manzana</a>
+            <a href="#zanahoria" class="nav-pill">🥕 Zanahoria</a>
+            <a href="#consejos" class="nav-pill border-[#c97c5d] text-[#c97c5d]">✨ Consejos</a>
         </nav>
     </header>
 
-    <main class="max-w-6xl mx-auto">
-        
-        <!-- Receta Natural -->
-        <section id="natural" class="card">
-            <div class="bg-[#A3B18A] p-8 text-white text-center">
-                <h2 class="text-4xl md:text-5xl italic">Esencia Natural</h2>
-                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Vainilla & Avena</p>
+    <main class="max-w-5xl mx-auto px-4 space-y-16">
+
+        <!-- RECETA 1: NATURAL (VAINILLA) -->
+        <section id="natural" class="recipe-card">
+            <div class="recipe-header">
+                <h2 class="italic-title text-4xl mb-1">Vainilla Simple</h2>
+                <p class="uppercase tracking-[0.2em] text-xs opacity-90">Base Neutra & Versátil</p>
             </div>
-            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
-                <div class="md:col-span-4">
-                   <div class="photo-container rotate-left">
-                      <img src="Natural.png" alt="Hotcakes naturales">
+            
+            <div class="p-8 md:p-12">
+                <div class="grid lg:grid-cols-12 gap-10">
+                    <!-- Foto -->
+                    <div class="lg:col-span-4 flex flex-col items-center">
+                        <div class="photo-frame w-full max-w-xs rotate-left">
+                            <img src="Natural.png" alt="Hotcakes de Vainilla">
                         </div>
-                </div>
-                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 text-left">
-                    <div>
-                        <h3 class="text-2xl text-[#588157] mb-4 border-b border-[#A3B18A]/30 pb-2 italic text-left">Ingredientes</h3>
-                        <ul class="space-y-3 text-stone-700">
-                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> ¾ taza harina de avena</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> 2 huevos</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> 2 cdas yogurt natural</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#588157]"> Vainilla y pizca de sal</li>
-                        </ul>
                     </div>
-                    <div>
-                        <h3 class="text-2xl text-[#588157] mb-4 border-b border-[#A3B18A]/30 pb-2 italic text-left">El Ritual</h3>
-                        <p class="text-stone-600 italic leading-relaxed">
-                            "Mezcla con suavidad. Deja que la masa repose 5 min para que la avena se hidrate y queden extra esponjosos."
-                        </p>
+
+                    <!-- Contenido -->
+                    <div class="lg:col-span-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <!-- Ingredientes -->
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#6b7c55]">Ingredientes Húmedos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 huevos</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 cdas yogurt natural (griego o sin azúcar)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza leche (solo si hace falta)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cda aceite, mantequilla o ghee</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>½ cdita vainilla</span></label>
+                                </div>
+
+                                <h3 class="italic-title text-xl mb-4 mt-6 border-b pb-1 text-[#6b7c55]">Ingredientes Secos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>¾ taza harina base (avena, trigo, etc)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza amaranto</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cdita polvo para hornear</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ cdita bicarbonato (opcional)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 pizca de sal</span></label>
+                                </div>
+                            </div>
+
+                            <!-- Preparación -->
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#6b7c55]">Preparación</h3>
+                                <ol class="list-decimal pl-5 space-y-3 text-sm text-stone-700 leading-relaxed">
+                                    <li>Mezcla los ingredientes secos.</li>
+                                    <li>En otro bowl bate ligeramente los huevos y agrega yogurt, grasa, vainilla.</li>
+                                    <li>Incorpora los secos a los húmedos sin sobrebatir.</li>
+                                    <li>Ajusta con leche solo si la mezcla está muy espesa.</li>
+                                    <li>Reposa 5 minutos.</li>
+                                    <li>Cocina en sartén antiadherente a fuego medio–bajo.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Nutrición -->
+                        <div class="text-center">
+                            <details>
+                                <summary class="nutrition-btn">Ver Información Nutricional ▼</summary>
+                                <div class="nutrition-dropdown text-left">
+                                    <table class="nutrition-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutriente</th>
+                                                <th>Receta Completa</th>
+                                                <th class="col-highlight">Por Hotcake</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Calorías</td><td>~900 kcal</td><td class="col-highlight">~112 kcal</td></tr>
+                                            <tr><td>Proteína</td><td>~46 g</td><td class="col-highlight">~5.7 g</td></tr>
+                                            <tr><td>Carbohidratos</td><td>~95 g</td><td class="col-highlight">~12 g</td></tr>
+                                            <tr><td>Grasas</td><td>~38 g</td><td class="col-highlight">~4.7 g</td></tr>
+                                            <tr><td>Fibra</td><td>~11 g</td><td class="col-highlight">~1.4 g</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-xs text-center mt-2 text-stone-500 italic">*Es la que tiene mejor relación proteína/caloría de todas.</p>
+                                </div>
+                            </details>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="px-8 pb-8 text-center">
-                <button onclick="toggleTab('nutri-natural')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#588157]">Información Nutricional</button>
-                <div id="nutri-natural" class="nutrition-panel p-6 mt-4 rounded-2xl">
-                    <p class="font-bold text-[#588157] text-lg">~112 kcal | 5.7g Proteína | 12g Carbos</p>
                 </div>
             </div>
         </section>
 
-        <!-- Receta Plátano -->
-        <section id="platano" class="card">
-            <div class="bg-[#D4A373] p-8 text-white text-center">
-                <h2 class="text-4xl md:text-5xl italic">Plátano Dulce</h2>
-                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Energía & Potasio</p>
+        <!-- RECETA 2: PLÁTANO -->
+        <section id="platano" class="recipe-card">
+            <div class="recipe-header !bg-[#e6cc8a] !text-[#4a3728]">
+                <h2 class="italic-title text-4xl mb-1">Hotcakes de Plátano</h2>
+                <p class="uppercase tracking-[0.2em] text-xs opacity-70">Altos en proteína · Suaves · Naturalmente dulces</p>
             </div>
-            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
-                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 order-2 md:order-1 text-left">
-                    <div>
-                        <h3 class="text-2xl text-[#D4A373] mb-4 border-b border-[#D4A373]/30 pb-2 italic text-left">Ingredientes</h3>
-                        <ul class="space-y-3 text-stone-700">
-                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> 1 plátano maduro</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> ¾ taza harina de avena</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> 2 huevos</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#D4A373]"> Canela al gusto</li>
-                        </ul>
+            
+            <div class="p-8 md:p-12">
+                <div class="grid lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-4 flex flex-col items-center">
+                        <div class="photo-frame w-full max-w-xs rotate-right">
+                            <img src="Platano.png" alt="Hotcakes de Plátano">
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl text-[#D4A373] mb-4 border-b border-[#D4A373]/30 pb-2 italic text-left">El Ritual</h3>
-                        <p class="text-stone-600 italic leading-relaxed">
-                            "Machaca el plátano hasta que sea un puré sedoso. Mézclalo con amor antes de añadir los ingredientes secos."
-                        </p>
+
+                    <div class="lg:col-span-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#b5a165]">Ingredientes Secos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>¾ taza harina base</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza amaranto</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cdita polvo hornear</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ cdita bicarbonato</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>Pizca sal & Canela (opcional)</span></label>
+                                </div>
+
+                                <h3 class="italic-title text-xl mb-4 mt-6 border-b pb-1 text-[#b5a165]">Ingredientes Húmedos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 huevos</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 plátano maduro machacado</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 cdas yogurt natural</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cda aceite/ghee</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza leche (opcional)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>½ cdita vainilla (opcional)</span></label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#b5a165]">Preparación</h3>
+                                <ol class="list-decimal pl-5 space-y-3 text-sm text-stone-700 leading-relaxed">
+                                    <li>Mezcla todos los ingredientes secos.</li>
+                                    <li>En otro bowl machaca el plátano y agrega huevos, yogurt, grasa y vainilla.</li>
+                                    <li>Incorpora los secos a los húmedos sin sobrebatir.</li>
+                                    <li>Ajusta con leche solo si está muy espesa.</li>
+                                    <li>Reposa 5 minutos.</li>
+                                    <li>Cocina en sartén a fuego medio-bajo hasta que salgan burbujas; voltea y termina de cocer.</li>
+                                </ol>
+                                <p class="text-xs mt-3 italic font-bold text-[#b5a165]">✨ No necesita endulzante extra.</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <details>
+                                <summary class="nutrition-btn !text-[#4a3728] !bg-[#f7f0df]">Ver Información Nutricional ▼</summary>
+                                <div class="nutrition-dropdown text-left">
+                                    <table class="nutrition-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutriente</th>
+                                                <th>Receta Completa</th>
+                                                <th class="col-highlight">Por Hotcake</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Calorías</td><td>~1,050 kcal</td><td class="col-highlight">~130 kcal</td></tr>
+                                            <tr><td>Proteína</td><td>~44 g</td><td class="col-highlight">~5.5 g</td></tr>
+                                            <tr><td>Carbohidratos</td><td>~130 g</td><td class="col-highlight">~16 g</td></tr>
+                                            <tr><td>Grasas</td><td>~38 g</td><td class="col-highlight">~4.7 g</td></tr>
+                                            <tr><td>Fibra</td><td>~14 g</td><td class="col-highlight">~1.7 g</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </details>
+                        </div>
                     </div>
-                </div>
-                <div class="md:col-span-4 order-1 md:order-2">
-                    <div class="photo-container rotate-right">
-  <img src="Platano.png" alt="Hotcakes de plátano">
-</div>
-                </div>
-            </div>
-            <div class="px-8 pb-8 text-center">
-                <button onclick="toggleTab('nutri-platano')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#D4A373]">Información Nutricional</button>
-                <div id="nutri-platano" class="nutrition-panel p-6 mt-4 rounded-2xl">
-                    <p class="font-bold text-[#D4A373] text-lg">~130 kcal | 2.1g Fibra | Energía Natural</p>
                 </div>
             </div>
         </section>
 
-        <!-- Receta Zanahoria -->
-        <section id="zanahoria" class="card">
-            <div class="bg-[#E99D44] p-8 text-white text-center">
-                <h2 class="text-4xl md:text-5xl italic">Carrot Cake Style</h2>
-                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Especias & Vitalidad</p>
+        <!-- RECETA 3: MANZANA -->
+        <section id="manzana" class="recipe-card">
+            <div class="recipe-header !bg-[#c45a5a]">
+                <h2 class="italic-title text-4xl mb-1">Manzana Rallada</h2>
+                <p class="uppercase tracking-[0.2em] text-xs opacity-90">Jugosos · Saciantes · Equilibrio</p>
             </div>
-            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
-                <div class="md:col-span-4">
-                    <div class="photo-container rotate-left">
-  <img src="Zanahoria.png" alt="Hotcakes de zanahoria">
-</div>
-                </div>
-                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 text-left">
-                    <div>
-                        <h3 class="text-2xl text-[#E99D44] mb-4 border-b border-[#E99D44]/30 pb-2 italic text-left">Ingredientes</h3>
-                        <ul class="space-y-3 text-stone-700">
-                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> ½ taza zanahoria rallada</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> ¾ taza harina de avena</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> 2 huevos</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#E99D44]"> Nuez moscada y jengibre</li>
-                        </ul>
+            
+            <div class="p-8 md:p-12">
+                <div class="grid lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-4 flex flex-col items-center">
+                        <div class="photo-frame w-full max-w-xs rotate-left">
+                            <img src="Manzana.png" alt="Hotcakes de Manzana">
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl text-[#E99D44] mb-4 border-b border-[#E99D44]/30 pb-2 italic text-left">El Ritual</h3>
-                        <p class="text-stone-600 italic leading-relaxed">
-                            "Ralla la zanahoria muy fina. Es el secreto para que se funda con la masa y aporte un color vibrante."
-                        </p>
+
+                    <div class="lg:col-span-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#c45a5a]">Ingredientes Secos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>¾ taza harina base</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza amaranto</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cdta polvo hornear</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ cdta bicarbonato</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>Pizca sal & Opcional Canela</span></label>
+                                </div>
+
+                                <h3 class="italic-title text-xl mb-4 mt-6 border-b pb-1 text-[#c45a5a]">Ingredientes Húmedos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 huevos</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 manzana rallada (cruda, con cáscara)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 cdas yogurt natural</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cda aceite/ghee</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza leche (ajustar)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>½ cdita vainilla</span></label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#c45a5a]">Preparación</h3>
+                                <ol class="list-decimal pl-5 space-y-3 text-sm text-stone-700 leading-relaxed">
+                                    <li>Mezcla ingredientes secos.</li>
+                                    <li>En otro bowl bate ligeramente huevos, yogurt, grasa y vainilla.</li>
+                                    <li>Incorpora secos.</li>
+                                    <li>Agrega la manzana rallada al final.</li>
+                                    <li>Reposa 5 minutos.</li>
+                                    <li>Cocina a fuego medio-bajo hasta que estén bien cocidos por dentro.</li>
+                                </ol>
+                                <p class="text-xs mt-3 italic font-bold text-[#c45a5a]">✨ No exprimas la manzana: su jugo es parte de la receta.</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <details>
+                                <summary class="nutrition-btn !text-[#c45a5a] !bg-[#fdf3f3]">Ver Información Nutricional ▼</summary>
+                                <div class="nutrition-dropdown text-left">
+                                    <table class="nutrition-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutriente</th>
+                                                <th>Receta Completa</th>
+                                                <th class="col-highlight">Por Hotcake</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Calorías</td><td>~980 kcal</td><td class="col-highlight">~122 kcal</td></tr>
+                                            <tr><td>Proteína</td><td>~43 g</td><td class="col-highlight">~5.4 g</td></tr>
+                                            <tr><td>Carbohidratos</td><td>~115 g</td><td class="col-highlight">~14 g</td></tr>
+                                            <tr><td>Grasas</td><td>~37 g</td><td class="col-highlight">~4.6 g</td></tr>
+                                            <tr><td>Fibra</td><td>~16 g</td><td class="col-highlight">~2 g</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </details>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="px-8 pb-8 text-center">
-                <button onclick="toggleTab('nutri-zanahoria')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#E99D44]">Información Nutricional</button>
-                <div id="nutri-zanahoria" class="nutrition-panel p-6 mt-4 rounded-2xl">
-                    <p class="font-bold text-[#E99D44] text-lg">~125 kcal | Vitamina A | Antioxidante</p>
                 </div>
             </div>
         </section>
 
-        <!-- Receta Manzana -->
-        <section id="manzana" class="card">
-            <div class="bg-[#BC4749] p-8 text-white text-center">
-                <h2 class="text-4xl md:text-5xl italic">Manzana & Canela</h2>
-                <p class="uppercase tracking-widest text-xs mt-2 opacity-80 font-bold">Otoño & Confort</p>
+        <!-- RECETA 4: ZANAHORIA -->
+        <section id="zanahoria" class="recipe-card">
+            <div class="recipe-header !bg-[#d98c5f]">
+                <h2 class="italic-title text-4xl mb-1">Zanahoria con Canela</h2>
+                <p class="uppercase tracking-[0.2em] text-xs opacity-90">Tipo Carrot Cake · Reconfortantes</p>
             </div>
-            <div class="p-8 md:p-12 grid md:grid-cols-12 gap-10 items-center">
-                <div class="md:col-span-8 grid md:grid-cols-2 gap-8 order-2 md:order-1 text-left">
-                    <div>
-                        <h3 class="text-2xl text-[#BC4749] mb-4 border-b border-[#BC4749]/30 pb-2 italic text-left">Ingredientes</h3>
-                        <ul class="space-y-3 text-stone-700">
-                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> ½ manzana rallada</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> ¾ taza harina de avena</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> 2 huevos</li>
-                            <li><input type="checkbox" class="mr-2 accent-[#BC4749]"> Canela extra</li>
-                        </ul>
+            
+            <div class="p-8 md:p-12">
+                <div class="grid lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-4 flex flex-col items-center">
+                        <div class="photo-frame w-full max-w-xs rotate-right">
+                            <img src="Zanahoria.png" alt="Hotcakes de Zanahoria">
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl text-[#BC4749] mb-4 border-b border-[#BC4749]/30 pb-2 italic text-left">El Ritual</h3>
-                        <p class="text-stone-600 italic leading-relaxed">
-                            "La manzana aporta una humedad única. Sírvelos calientes para que el aroma a canela llene tu cocina."
-                        </p>
+
+                    <div class="lg:col-span-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#d98c5f]">Ingredientes Secos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>¾ taza harina base</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza amaranto</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cdta polvo hornear</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ cdta bicarbonato</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>Pizca sal & 1 cdta canela ⭐</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>Opcional: nuez o jengibre</span></label>
+                                </div>
+
+                                <h3 class="italic-title text-xl mb-4 mt-6 border-b pb-1 text-[#d98c5f]">Ingredientes Húmedos</h3>
+                                <div class="space-y-1">
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 huevos</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¾ taza zanahoria rallada fina</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>2 cdas yogurt natural</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>1 cda aceite/ghee</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>¼ taza leche (ajustar)</span></label>
+                                    <label class="checkbox-item"><input type="checkbox"><span>½ cdita vainilla (opcional)</span></label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="italic-title text-xl mb-4 border-b pb-1 text-[#d98c5f]">Preparación</h3>
+                                <ol class="list-decimal pl-5 space-y-3 text-sm text-stone-700 leading-relaxed">
+                                    <li>Mezcla todos los ingredientes secos.</li>
+                                    <li>En otro bowl mezcla huevos, yogurt, grasa y vainilla.</li>
+                                    <li>Incorpora los secos.</li>
+                                    <li>Agrega la zanahoria rallada.</li>
+                                    <li>Reposa 5 minutos.</li>
+                                    <li>Cocina a fuego medio-bajo para que se cocinen bien por dentro.</li>
+                                </ol>
+                                <p class="text-xs mt-3 italic font-bold text-[#d98c5f]">✨ Aquí la canela no es opcional: es el alma del sabor.</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <details>
+                                <summary class="nutrition-btn !text-[#d98c5f] !bg-[#fbf4f0]">Ver Información Nutricional ▼</summary>
+                                <div class="nutrition-dropdown text-left">
+                                    <table class="nutrition-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutriente</th>
+                                                <th>Receta Completa</th>
+                                                <th class="col-highlight">Por Hotcake</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Calorías</td><td>~950 kcal</td><td class="col-highlight">~118 kcal</td></tr>
+                                            <tr><td>Proteína</td><td>~42 g</td><td class="col-highlight">~5.2 g</td></tr>
+                                            <tr><td>Carbohidratos</td><td>~110 g</td><td class="col-highlight">~13.5 g</td></tr>
+                                            <tr><td>Grasas</td><td>~36 g</td><td class="col-highlight">~4.5 g</td></tr>
+                                            <tr><td>Fibra</td><td>~17 g</td><td class="col-highlight">~2.1 g</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </details>
+                        </div>
                     </div>
-                </div>
-                <div class="md:col-span-4 order-1 md:order-2">
-                    <div class="photo-container rotate-right">
-  <img src="Manzana.png" alt="Hotcakes de manzana">
-</div>
-                </div>
-            </div>
-            <div class="px-8 pb-8 text-center">
-                <button onclick="toggleTab('nutri-manzana')" class="text-xs text-stone-400 underline decoration-dotted uppercase tracking-widest hover:text-[#BC4749]">Información Nutricional</button>
-                <div id="nutri-manzana" class="nutrition-panel p-6 mt-4 rounded-2xl">
-                    <p class="font-bold text-[#BC4749] text-lg">~118 kcal | Digestivo | Bajo Glucémico</p>
                 </div>
             </div>
         </section>
 
-        <!-- Sección Extras -->
-        <section id="extras" class="card bg-[#F2F4EF] border-dashed border-2 border-[#A3B18A]">
-            <div class="p-10 text-center">
-                <h2 class="text-4xl font-serif text-[#588157] mb-6 tracking-tight">✨ Toppings & Acompañamientos</h2>
-                <div class="grid md:grid-cols-3 gap-6 text-left">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                        <p class="font-bold text-[#D4A373] mb-2 uppercase text-xs tracking-widest">Crujientes</p>
-                        <p class="text-sm text-stone-500 italic leading-relaxed">Nueces de castilla, semillas de cáñamo (hemp) o cacao nibs para un toque amargo.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                        <p class="font-bold text-[#588157] mb-2 uppercase text-xs tracking-widest">Fruta Fresca</p>
-                        <p class="text-sm text-stone-500 italic leading-relaxed">Berries silvestres, higos maduros o rodajas de plátano fresco.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                        <p class="font-bold text-[#BC4749] mb-2 uppercase text-xs tracking-widest">Salsas & Untables</p>
-                        <p class="text-sm text-stone-500 italic leading-relaxed">Miel de maple pura, crema de almendras o yogurt griego extra.</p>
-                    </div>
-                </div>
+        <!-- SECCIÓN: CONSEJOS DEL CHEF -->
+        <section id="consejos" class="grid md:grid-cols-2 gap-8 mb-20">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <h3 class="serif-title italic text-2xl mb-6 text-[#c97c5d]">Opciones Extra</h3>
+                <ul class="space-y-4 text-sm text-stone-600">
+                    <li class="flex gap-2"><span>➕</span> <p><strong>1 clara extra</strong> → más proteína sin cambiar textura.</p></li>
+                    <li class="flex gap-2"><span>➕</span> <p><strong>1 cda proteína en polvo</strong> → sustituye 1 cda de harina.</p></li>
+                    <li class="flex gap-2"><span>➕</span> <p><strong>Harina de garbanzo</strong> → sustituye ¼ de la harina base (sabor más intenso).</p></li>
+                    <li class="flex gap-2"><span>➕</span> <p><strong>Nueces, pasas, arándanos o chispas</strong> → 2–3 cucharadas.</p></li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <h3 class="serif-title italic text-2xl mb-6 text-[#8a9a5b]">Diferencias según Harina</h3>
+                <ul class="space-y-4 text-sm text-stone-600">
+                    <li class="flex gap-2"><span>🌾</span> <p><strong>Avena:</strong> absorbe más → puede pedir 1–2 cdas de leche extra.</p></li>
+                    <li class="flex gap-2"><span>🌾</span> <p><strong>Trigo / integral:</strong> esponjosos; integral pide un poco más de líquido.</p></li>
+                    <li class="flex gap-2"><span>🌾</span> <p><strong>Amaranto entero:</strong> textura rústica, muy nutritivo, reposo obligatorio.</p></li>
+                    <li class="flex gap-2"><span>🌾</span> <p><strong>Amaranto en harina:</strong> más suave y homogéneo.</p></li>
+                    <li class="flex gap-2"><span>🌾</span> <p><strong>Almendra:</strong> menos estructura, usar bicarbonato (si se quiere esponjoso).</p></li>
+                </ul>
             </div>
         </section>
+
+        <!-- FOOTER & COMUNIDAD -->
+        <footer class="bg-[#e8d8c9] text-[#4a3728] p-12 rounded-t-[3rem] mt-12">
+            <div class="max-w-4xl mx-auto text-center">
+                <h3 class="serif-title italic text-3xl mb-6">Únete a la Comunidad</h3>
+                <div class="flex justify-center gap-8 mb-10">
+                    <a href="https://www.instagram.com/soymarthacon.h/" target="_blank" class="flex items-center gap-2 font-bold hover:text-white transition">
+                        <span>📷</span> @soymarthacon.h
+                    </a>
+                    <a href="https://www.instagram.com/storiah.mx/" target="_blank" class="flex items-center gap-2 font-bold hover:text-white transition">
+                        <span>✨</span> @storiah.mx
+                    </a>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur p-8 rounded-2xl max-w-lg mx-auto shadow-lg">
+                    <h4 class="font-bold text-lg mb-2">¿Quieres más recetas?</h4>
+                    <p class="text-sm mb-4">Suscríbete al newsletter y recibe contenido exclusivo.</p>
+                    <form action="https://formspree.io/f/mreagjkv" method="POST" class="flex flex-col gap-3">
+                        <input type="text" name="name" placeholder="Tu Nombre" required class="p-3 rounded-lg border border-stone-200 text-sm">
+                        <input type="email" name="email" placeholder="Tu Correo" required class="p-3 rounded-lg border border-stone-200 text-sm">
+                        <button type="submit" class="bg-[#c97c5d] text-white py-3 rounded-lg font-bold hover:bg-[#a66548] transition">Suscribirme</button>
+                    </form>
+                </div>
+                
+                <!-- AVISO DE PRIVACIDAD -->
+                <div class="mt-12 text-[10px] leading-relaxed text-stone-500 opacity-80 max-w-3xl mx-auto">
+                    <p class="mb-2 font-bold uppercase tracking-widest text-[#4a3728]">Aviso de Privacidad Simplificado</p>
+                    <p>En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México) y estándares internacionales, tus datos personales (nombre y correo) serán utilizados únicamente para enviarte información de interés relacionada con recetas y bienestar. No vendemos ni compartimos tu información con terceros. Puedes darte de baja en cualquier momento escribiendo a: <a href="mailto:storiah.mx@gmail.com" class="font-bold hover:underline">storiah.mx@gmail.com</a>.</p>
+                    <p class="mt-4 tracking-widest opacity-60">© 2024 Cocina con Intención</p>
+                </div>
+            </div>
+        </footer>
 
     </main>
 
-    <footer class="text-center py-20">
-        <div class="max-w-xs mx-auto border-t border-stone-200 pt-8">
-            <p class="handwritten text-4xl text-[#588157] mb-3">Hecho con amor</p>
-            <p class="text-[10px] uppercase tracking-[0.3em] text-stone-400">@soymarthacon.h | @storiah.mx</p>
-        </div>
-    </footer>
-
     <script>
-        function toggleTab(id) {
-            const panel = document.getElementById(id);
-            if (panel) {
-                const isVisible = panel.classList.contains('show');
-                // Ocultar otros paneles abiertos (opcional, para limpieza)
-                document.querySelectorAll('.nutrition-panel').forEach(p => p.classList.remove('show'));
-                if (!isVisible) {
-                    panel.classList.add('show');
-                }
-            }
+        function toggleItem(element) {
+            element.classList.toggle('completed');
         }
     </script>
+
 </body>
-
 </html>
-
